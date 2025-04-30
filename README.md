@@ -52,3 +52,8 @@ export default tseslint.config({
   },
 })
 ```
+
+## Artwork sources
+
+https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-four.html
+
