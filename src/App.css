@@ -19,3 +19,20 @@ span.random-result {
   border-radius: 50px;
   padding: 0.5rem 2rem;
 }
+
+.secret {
+  position: fixed;
+  top: 1em;
+  right: 3em;
+  padding-left: 3em;
+  padding-right: 3em;
+  opacity: 0;
+}
+
+.secret:hover {
+  opacity: 1;
+  -webkit-transition:all 0.7s;
+  -moz-transition:all 0.7s;
+  -o-transition:all 0.7s;
+  -ms-transition:all 0.7s;
+}

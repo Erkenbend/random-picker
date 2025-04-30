@@ -3,6 +3,7 @@ import './App.css'
 
 // TODO: add history of previous choices
 // TODO: make number of buttons configurable (+/- left and right)
+// TODO: add effect on refresh
 
 function App() {
     const [randomResult, updateRandomResult] = useState<number>(0)
@@ -31,6 +32,7 @@ function App() {
                 <span className="result-text">Pick option </span><span
                 className="random-result">{randomResult == 0 ? "-" : randomResult}</span>
             </h1>
+            <div className="secret">Theo stinkt lul</div>
         </>
     )
 }
