@@ -1,6 +1,9 @@
 import {useState} from 'react'
 import './App.css'
 
+// TODO: add history of previous choices
+// TODO: make number of buttons configurable (+/- left and right)
+
 function App() {
     const [randomResult, updateRandomResult] = useState<number>(0)
     const buttonMin = 2;
@@ -9,7 +12,9 @@ function App() {
     function generateButtons(min: number, max: number) {
         const result = []
         for (let i = min; i <= max; i++) {
-            result.push(<button onClick={() => updateRandomResult(() => Math.ceil(Math.random() * i))}>{i}</button>)
+            result.push(<button type="button" onClick={() => {
+                updateRandomResult(() => Math.ceil(Math.random() * i));
+            }}>{i}</button>)
         }
         return result
     }
@@ -23,7 +28,8 @@ function App() {
                 {generateButtons(buttonMin, buttonMax)}
             </div>
             <h1 className="result-card">
-                <span className="result-text">Pick option </span><span className="random-result">{randomResult == 0 ? "_" : randomResult}</span>
+                <span className="result-text">Pick option </span><span
+                className="random-result">{randomResult == 0 ? "-" : randomResult}</span>
             </h1>
         </>
     )

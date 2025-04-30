@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+div.button-list button {
+  border-radius: 80px;
+  font-size: 3em;
+}
+
 span.result-text {
   padding: 0.5rem 2rem;
 }
