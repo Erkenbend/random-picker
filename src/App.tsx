@@ -3,7 +3,6 @@ import './App.css'
 
 // TODO: add history of previous choices
 // TODO: make number of buttons configurable (+/- left and right)
-// TODO: add effect on refresh
 
 function App() {
     const [randomResult, updateRandomResult] = useState<number>(0)

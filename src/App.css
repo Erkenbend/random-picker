@@ -5,16 +5,20 @@
   text-align: center;
 }
 
-div.button-list button {
+.button-list:has(button:active) ~ h1 .random-result {
+  border: none;
+}
+
+.button-list button {
   border-radius: 80px;
   font-size: 3em;
 }
 
-span.result-text {
+.result-text {
   padding: 0.5rem 2rem;
 }
 
-span.random-result {
+.random-result {
   border: 1px solid #646cff;
   border-radius: 50px;
   padding: 0.5rem 2rem;
