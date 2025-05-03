@@ -15,6 +15,22 @@
     margin: auto 4rem;
 }
 
+.history {
+    position: fixed;
+    min-width: 12rem;
+    top: 1em;
+    left: 3em;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-element {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
 .button-list:has(button:active) ~ h1 .random-result {
     border: none;
 }

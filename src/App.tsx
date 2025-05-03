@@ -1,15 +1,41 @@
-import {JSX, useState} from 'react'
+import {JSX, useEffect, useState} from 'react'
 import './App.css'
 
-// TODO: add history of previous choices
+
+class Roll {
+    time: number
+    maxChoices: number
+    result: number
+
+    constructor(maxChoices: number, result: number) {
+        this.time = performance.now() + performance.timeOrigin
+        this.maxChoices = maxChoices
+        this.result = result
+    }
+}
 
 function App() {
-    const [randomResult, updateRandomResult] = useState<number>(0)
+    const [randomResult, updateRandomResult] = useState<Roll>(new Roll(0, 0))
     const buttonMinDefault = 2;
     const buttonMaxDefault = 8;
+    const maxHistoryLength = 15;
 
     const [bounds, setBounds] = useState<number[]>([buttonMinDefault, buttonMaxDefault]);
     const [buttons, setButtons] = useState<JSX.Element[]>(generateButtons(buttonMinDefault, buttonMaxDefault));
+    const [history, setHistory] = useState<Roll[]>([]);
+
+    useEffect(() => {
+        if (randomResult.result != 0) {
+            setHistory(h => {
+                const newH = [...h];
+                if (h.length >= maxHistoryLength) {
+                    newH.splice(0, 1)
+                }
+                newH.push(randomResult);
+                return newH;
+            })
+        }
+    }, [randomResult])
 
     function incrementRightSide() {
         const buttonLabel = bounds[1] + 1;
@@ -45,12 +71,17 @@ function App() {
 
     function generateButton(label: number): JSX.Element {
         return <button type="button" onClick={() => {
-            updateRandomResult(() => Math.ceil(Math.random() * label));
-        }}>{label}</button>
+            updateRandomResult(() => new Roll(label, Math.ceil(Math.random() * label)));
+        }} key={label}>{label}</button>
     }
 
     return (
         <>
+            <div className="history">
+                <h3 className="history-title">History</h3>
+                {history.map(elem => <span className="history-element"
+                                           key={elem.time}>{new Date(elem.time).toLocaleTimeString("en-DE")}&emsp;{elem.maxChoices} → {elem.result}</span>).reverse()}
+            </div>
             <div className="instructions">
                 <div className="size-changer">
                     <button type="button" onClick={incrementLeftSide} disabled={bounds[0] <= 2}>+</button>
@@ -69,7 +100,7 @@ function App() {
             </div>
             <h1 className="result-card">
                 <span className="result-text">Pick option </span><span
-                className="random-result">{randomResult == 0 ? "-" : randomResult}</span>
+                className="random-result">{randomResult.result == 0 ? "-" : randomResult.result}</span>
             </h1>
             <div className="secret">Theo stinkt lul</div>
         </>
