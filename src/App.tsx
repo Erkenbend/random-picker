@@ -3,9 +3,9 @@ import './App.css'
 
 
 class Roll {
-    time: number
-    maxChoices: number
-    result: number
+    readonly time: number
+    readonly maxChoices: number
+    readonly result: number
 
     constructor(maxChoices: number, result: number) {
         this.time = performance.now() + performance.timeOrigin
@@ -14,51 +14,62 @@ class Roll {
     }
 }
 
+interface Bounds {
+    readonly min: number
+    readonly max: number
+}
+
+const config = {
+    buttonMinDefault: 2,
+    buttonMinLimit: 2,
+    buttonMaxDefault: 8,
+    buttonMaxLimit: 20,
+    maxHistoryLength: 15,
+} as const;
+
 function App() {
     const [randomResult, updateRandomResult] = useState<Roll>(new Roll(0, 0))
-    const buttonMinDefault = 2;
-    const buttonMaxDefault = 8;
-    const maxHistoryLength = 15;
-
-    const [bounds, setBounds] = useState<number[]>([buttonMinDefault, buttonMaxDefault]);
-    const [buttons, setButtons] = useState<JSX.Element[]>(generateButtons(buttonMinDefault, buttonMaxDefault));
+    const [bounds, setBounds] = useState<Bounds>({min: config.buttonMinDefault, max: config.buttonMaxDefault});
+    const [buttons, setButtons] = useState<JSX.Element[]>(generateButtons(config.buttonMinDefault, config.buttonMaxDefault));
     const [history, setHistory] = useState<Roll[]>([]);
 
-    useEffect(() => {
+    useEffect(updateHistoryOnNewResult, [randomResult])
+
+    function updateHistoryOnNewResult() {
         if (randomResult.result != 0) {
             setHistory(h => {
                 const newH = [...h];
-                if (h.length >= maxHistoryLength) {
+                if (h.length >= config.maxHistoryLength) {
                     newH.splice(0, 1)
                 }
                 newH.push(randomResult);
                 return newH;
             })
         }
-    }, [randomResult])
+    }
 
     function incrementRightSide() {
-        const buttonLabel = bounds[1] + 1;
+        const buttonLabel = bounds.max + 1;
         const button = generateButton(buttonLabel);
         setButtons(b => [...b, button]);
-        setBounds(b => [b[0], buttonLabel]);
+        setBounds(b => ({min: b.min, max: buttonLabel}));
     }
 
     function decrementRightSide() {
         setButtons(b => b.slice(0, -1));
-        setBounds(b => [b[0], b[1] - 1]);
+        setBounds(b => ({min: b.min, max: b.max - 1}));
     }
 
     function incrementLeftSide() {
-        const buttonLabel = bounds[0] - 1;
+        const buttonLabel = bounds.min - 1;
         const button = generateButton(buttonLabel);
         setButtons(b => [button, ...b]);
-        setBounds(b => [buttonLabel, b[1]]);
+        setBounds(b => ({min: buttonLabel, max: b.max}));
     }
 
     function decrementLeftSide() {
         setButtons(b => b.slice(1, b.length))
-        setBounds(b => [b[0] + 1, b[1]]);
+        setBounds(b => ({min: b.min + 1, max: b.max}));
     }
 
     function generateButtons(min: number, max: number): JSX.Element[] {
@@ -84,15 +95,17 @@ function App() {
             </div>
             <div className="instructions">
                 <div className="size-changer">
-                    <button type="button" onClick={incrementLeftSide} disabled={bounds[0] <= 2}>+</button>
-                    <button type="button" onClick={decrementLeftSide} disabled={bounds[0] == bounds[1]}>-</button>
+                    <button type="button" onClick={incrementLeftSide} disabled={bounds.min <= config.buttonMinLimit}>+
+                    </button>
+                    <button type="button" onClick={decrementLeftSide} disabled={bounds.min == bounds.max}>-</button>
                 </div>
                 <div className="instructions-text">
                     Click on a button to randomly choose among that amount of options
                 </div>
                 <div className="size-changer">
-                    <button type="button" onClick={decrementRightSide} disabled={bounds[0] == bounds[1]}>-</button>
-                    <button type="button" onClick={incrementRightSide} disabled={bounds[1] >= 20}>+</button>
+                    <button type="button" onClick={decrementRightSide} disabled={bounds.min == bounds.max}>-</button>
+                    <button type="button" onClick={incrementRightSide} disabled={bounds.max >= config.buttonMaxLimit}>+
+                    </button>
                 </div>
             </div>
             <div className="button-list">
