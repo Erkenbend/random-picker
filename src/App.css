@@ -29,6 +29,17 @@
 .history-element {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
+    margin-right: 2.5rem;
+}
+
+.history-date {
+    min-width: 5rem;
+    padding-right: 1rem;
+}
+
+.history-result {
+    text-align: left;
+    min-width: 5rem;
 }
 
 .button-list:has(button:active) ~ h1 .random-result {

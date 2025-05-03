@@ -90,8 +90,13 @@ function App() {
         <>
             <div className="history">
                 <h3 className="history-title">History</h3>
-                {history.map(elem => <span className="history-element"
-                                           key={elem.time}>{new Date(elem.time).toLocaleTimeString("en-DE")}&emsp;{elem.maxChoices} → {elem.result}</span>).reverse()}
+                <table>
+                    {history.map(elem => <tr className="history-element"
+                                             key={elem.time}>
+                        <td className="history-date">{new Date(elem.time).toLocaleTimeString("en-DE")}</td>
+                        <td className="history-result">{elem.maxChoices} → {elem.result}</td>
+                    </tr>).reverse()}
+                </table>
             </div>
             <div className="instructions">
                 <div className="size-changer">
