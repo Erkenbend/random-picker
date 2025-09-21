@@ -19,7 +19,7 @@ jobs:
 
       - name: Build application
         run: |
-          npm install && CI=false npm run build
+          npm install && npm run lint && CI=false npm run build
 
       - name: Build infra
         run: |
