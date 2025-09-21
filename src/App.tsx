@@ -27,8 +27,11 @@ const config = {
     maxHistoryLength: 15,
 } as const;
 
+const LOCALE = "en-DE";
+
 function App() {
     const [randomResult, updateRandomResult] = useState<Roll>(new Roll(0, 0))
+    const [latestCLicked, setLatestCLicked] = useState<string>("-")
     const [bounds, setBounds] = useState<Bounds>({min: config.buttonMinDefault, max: config.buttonMaxDefault});
     const [buttons, setButtons] = useState<JSX.Element[]>(generateButtons(config.buttonMinDefault, config.buttonMaxDefault));
     const [history, setHistory] = useState<Roll[]>([]);
@@ -83,6 +86,7 @@ function App() {
     function generateButton(label: number): JSX.Element {
         return <button type="button" onClick={() => {
             updateRandomResult(() => new Roll(label, Math.ceil(Math.random() * label)));
+            setLatestCLicked(() => label.toString(10));
         }} key={label}>{label}</button>
     }
 
@@ -93,7 +97,7 @@ function App() {
                 <table>
                     {history.map(elem => <tr className="history-element"
                                              key={elem.time}>
-                        <td className="history-date">{new Date(elem.time).toLocaleTimeString("en-DE")}</td>
+                        <td className="history-date">{new Date(elem.time).toLocaleTimeString(LOCALE)}</td>
                         <td className="history-result">{elem.maxChoices} → {elem.result}</td>
                     </tr>).reverse()}
                 </table>
@@ -117,11 +121,11 @@ function App() {
                 {buttons}
             </div>
             <h1 className="result-card">
-                <span className="result-text">Pick option </span><span
+                <span className="result-text">Between 1 and {latestCLicked}, option chosen: </span><span
                 className="random-result">{randomResult.result == 0 ? "-" : randomResult.result}</span>
             </h1>
             <div className="build-timestamp">
-                Build timestamp: {new Date(BUILD_TIMESTAMP).toLocaleString()}
+                Build timestamp: {new Date(BUILD_TIMESTAMP).toLocaleString(LOCALE)}
             </div>
             <div className="secret">Theo stinkt lul</div>
         </>
