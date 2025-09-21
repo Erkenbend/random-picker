@@ -1,6 +1,8 @@
 # Random Picker
 
-Pick a number between 1 and N at random with one click
+Pick a number between 1 and N at random with one click → https://randompicker.ninasworkshop.de
+
+![Screenshot](./public/screenshot.png)
 
 ## Commands
 
