@@ -19,18 +19,15 @@ jobs:
 
       - name: Build application
         run: |
-          npm install
-          CI=false npm run build
+          npm install && CI=false npm run build
 
       - name: Build infra
         run: |
-          cd infrastructure
-          npm install
+          cd infrastructure && npm install
 
       - name: CDK diff
         run: |
-          cd infrastructure
-          npx cdk diff
+          cd infrastructure && npx cdk diff
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -38,8 +35,7 @@ jobs:
 
       - name: CDK deploy
         run: |
-          cd infrastructure
-          npx cdk deploy --require-approval never "RandomPickerInfrastructureStack"
+          cd infrastructure && npx cdk deploy --require-approval never "RandomPickerInfrastructureStack"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
