@@ -77,3 +77,12 @@
     -o-transition: all 0.7s;
     -ms-transition: all 0.7s;
 }
+
+.build-timestamp {
+    position: fixed;
+    bottom: 2em;
+    right: 3em;
+    padding-left: 1em;
+    padding-right: 1em;
+    opacity: 0.4;
+}

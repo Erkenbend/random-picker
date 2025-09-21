@@ -120,6 +120,9 @@ function App() {
                 <span className="result-text">Pick option </span><span
                 className="random-result">{randomResult.result == 0 ? "-" : randomResult.result}</span>
             </h1>
+            <div className="build-timestamp">
+                Build timestamp: {new Date(BUILD_TIMESTAMP).toLocaleString()}
+            </div>
             <div className="secret">Theo stinkt lul</div>
         </>
     )
