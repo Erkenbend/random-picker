@@ -17,30 +17,29 @@ jobs:
         with:
           node-version: 22
 
-      - name: Build
+      - name: Build application
         run: |
           npm install
           CI=false npm run build
 
+      - name: Build infra
+        run: |
+          cd infrastructure
+          npm install
+
       - name: CDK diff
-        uses: sightsoundtheatres/aws-cdk-github-actions@cfadb4843373e20d1c23d5f702e62a7a1b736b5a
-        with:
-          cdk_subcommand: 'diff'
-          working_dir: './infrastructure'
-          actions_comment: true
+        run: |
+          cd infrastructure
+          cdk diff
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: 'us-east-1'
 
       - name: CDK deploy
-        uses: sightsoundtheatres/aws-cdk-github-actions@cfadb4843373e20d1c23d5f702e62a7a1b736b5a
-        with:
-          cdk_subcommand: 'deploy'
-          working_dir: './infrastructure'
-          cdk_stack: 'RandomPickerInfrastructureStack'
-          cdk_args: '--require-approval never'
-          actions_comment: true
+        run: |
+          cd infrastructure
+          cdk deploy --require-approval never "RandomPickerInfrastructureStack"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
