@@ -19,11 +19,15 @@ jobs:
 
       - name: Build application
         run: |
-          npm install && npm run lint && CI=false npm run build
+          npm install && CI=false npm run build
 
       - name: Build infra
         run: |
           cd infrastructure && npm install
+
+      - name: Lint
+        run: |
+          npm run lint
 
       - name: CDK diff
         run: |
