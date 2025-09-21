@@ -17,17 +17,21 @@ jobs:
         with:
           node-version: 22
 
-      - name: Build application
+      - name: Install dependencies
         run: |
-          npm install && CI=false npm run build
+          npm install
 
-      - name: Build infra
+      - name: Install infrastructure dependencies
         run: |
           cd infrastructure && npm install
 
       - name: Lint
         run: |
           npm run lint
+
+      - name: Build application
+        run: |
+          CI=false npm run build
 
       - name: CDK diff
         run: |
