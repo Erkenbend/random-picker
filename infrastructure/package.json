@@ -22,5 +22,8 @@
   "dependencies": {
     "aws-cdk-lib": "2.215.0",
     "constructs": "^10.4.2"
+  },
+  "overrides": {
+    "glob": "^9.3.5"
   }
 }
