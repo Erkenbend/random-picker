@@ -79,10 +79,15 @@
     -ms-transition: all 0.7s;
 }
 
-.build-timestamp {
+.footer {
     position: fixed;
     bottom: 2em;
     right: 3em;
+    display: flex;
+    align-items: center;
+}
+
+.build-timestamp {
     padding-left: 1em;
     padding-right: 1em;
     opacity: 0.4;

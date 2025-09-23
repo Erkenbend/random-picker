@@ -124,8 +124,15 @@ function App() {
                 <span className="result-text">Between 1 and {latestCLicked}, option chosen: </span><span
                 className="random-result">{randomResult.result == 0 ? "-" : randomResult.result}</span>
             </h1>
-            <div className="build-timestamp">
-                Build timestamp: {new Date(BUILD_TIMESTAMP).toLocaleString(LOCALE)}
+            <div className="footer">
+                <div className="build-timestamp">
+                    Build timestamp: {new Date(BUILD_TIMESTAMP).toLocaleString(LOCALE)}
+                </div>
+                <div className="github-logo">
+                    <a href="https://github.com/Erkenbend/random-picker">
+                        <img src="/github-mark-white.svg" alt="GitHub Logo" width="40px"/>
+                    </a>
+                </div>
             </div>
             <div className="secret">Theo stinkt lul</div>
         </>
